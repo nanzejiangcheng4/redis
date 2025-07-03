@@ -10,9 +10,9 @@ export default defineEventHandler(async (event): Promise<ReturnJSONMembers> => {
     // ストレージの用意
     const storage = useStorage();
     // ストレージから会員リスト情報JSONオブジェクトを取得
-    const memberListStorage = await storage.getItem(
-      "local:member-management_members"
-    );
+    const memberListStorage = (await storage.getItem(
+      "redis:member-management_members"
+    )) as any;
     // throw createError("擬似エラー発生");
     // 会員リスト情報JSONオブジェクトが存在するなら
     if (memberListStorage != undefined) {

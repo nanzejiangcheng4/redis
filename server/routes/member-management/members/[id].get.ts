@@ -9,9 +9,9 @@ export default defineEventHandler(async (event): Promise<ReturnJSONMembers> => {
     // memberDB.tsを利用して会員リスト情報Mapオブジェクトを生成
     let memberList = new Map<number, Member>();
     const storage = useStorage();
-    const memberListStorage = await storage.getItem(
-      "local:member-management_members"
-    );
+    const memberListStorage = (await storage.getItem(
+      "redis:member-management_members"
+    )) as any;
     // throw createError('擬似エラー発生);
     if (memberListStorage != undefined) {
       memberList = new Map<number, Member>(memberListStorage as any);

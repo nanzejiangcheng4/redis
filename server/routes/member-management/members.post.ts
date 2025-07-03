@@ -10,14 +10,14 @@ export default defineEventHandler(async (event): Promise<ReturnJSONMembers> => {
     const member = body as Member;
     let memberList = new Map<number, Member>();
     const storage = useStorage();
-    let memberListStorage = await storage.getItem(
-      "local:member-management_members"
-    );
+    let memberListStorage = (await storage.getItem(
+      "redis:member-management_members"
+    )) as any;
     if (memberListStorage != undefined) {
       memberList = new Map<number, Member>(memberListStorage as any);
     }
     memberList.set(member.id, member);
-    await storage.setItem("local:member-management_members", [...memberList]);
+    await storage.setItem("redis:member-management_members", [...memberList]);
     memberListArray[0] = member;
     resultVal = 1;
   } catch (error) {
